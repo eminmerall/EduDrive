@@ -32,12 +32,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'Drive',
+    'Account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -122,8 +124,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "static"
 ]
+
+MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_URL = "/files/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

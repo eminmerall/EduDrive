@@ -1,45 +1,14 @@
 from datetime import date
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from Drive.forms import CommentForm
+from django.http.response import HttpResponseRedirect
+from Drive.models import File
+from django.urls import reverse
+
+
 
 data = {
-    "files": [
-        {
-            "title": "Dosya adı 1",
-            "decription": "Dosya açıklama 1 ",
-            "imageUrl": "m1.jpg",
-            "coverImage": "cover1.jpg",
-            "slug": "file-name-1",
-            "language": "english",
-            "date" : date(2020,5,10)
-        },
-        {
-            "title": "Dosya adı 2",
-            "decription": "Dosya açıklama 2 ",
-            "imageUrl": "m2.jpg",
-            "coverImage": "cover2.jpg",
-            "slug": "file-name-2",
-            "language": "english",
-            "date" : date(2021,6,1)
-        },
-        {
-            "title": "Dosya adı 3",
-            "decription": "Dosya açıklama 3 ",
-            "imageUrl": "m3.jpg",
-            "coverImage": "cover3.jpg",
-            "slug": "file-name-3",
-            "language": "english",
-            "date" : date(2023,7,10)
-        },
-        {
-            "title": "Dosya adı 4",
-            "decription": "Dosya açıklama 4 ",
-            "imageUrl": "m4.jpg",
-            "coverImage": "cover1.jpg",
-            "slug": "file-name-4",
-            "language": "english",
-            "date" : date(2022,8,25)
-        }
-    ],
+
     "sliders": [
         {
             "slider_image":"slider1.jpg",
@@ -58,7 +27,7 @@ data = {
 
 # Create your views here.
 def index(request):
-    files = data["files"][-4:]
+    files = File.objects.filter(is_active=True, is_home=True) 
     sliders=data["sliders"]
     return render(request, 'index.html',{
         "files": files,
@@ -66,21 +35,26 @@ def index(request):
     })
 
 def files(request):
-    files = data["files"]
+    files = File.objects.filter(is_active=True) 
     return render(request,'files.html',{
         "files": files
     })
 
 def file_details(request, slug):
-    files = data["files"]
-    # selectedFile = None
-    # for file in files:
-    #    if file["slug"] == slug:
-    #        selectedFile = file
 
-    selectedFile = next(file for file in files if file["slug"]==slug)
+    file = get_object_or_404(File, slug=slug)
+    comment_form = CommentForm()
 
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.file = file
+            comment.save()
+            return HttpResponseRedirect(reverse("file_details", args=[slug]))
 
     return render(request,'file-details.html',{
-        "file": selectedFile
+        "file": file,
+        "comments":file.comments.all().order_by("-date_added"),
+        "comment_form": comment_form
     })
