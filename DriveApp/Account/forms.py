@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import widgets
+import random
 
 
 class LoginForm(forms.Form):
@@ -20,15 +21,18 @@ class LoginForm(forms.Form):
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username","email",)
+        fields = ("email", "first_name", "last_name")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["password1"].widget = widgets.PasswordInput(attrs={"class":"form-control form-control-user","placeholder":"Password"})
         self.fields["password2"].widget = widgets.PasswordInput(attrs={"class":"form-control form-control-user","placeholder":"Password Again"})
-        self.fields["username"].widget = widgets.TextInput(attrs={"class":"form-control form-control-user","placeholder":"Username"})
+        self.fields["first_name"].widget = widgets.TextInput(attrs={"class":"form-control form-control-user","placeholder":"Name"})
+        self.fields["last_name"].widget = widgets.TextInput(attrs={"class":"form-control form-control-user","placeholder":"LastName"})
         self.fields["email"].widget = widgets.EmailInput(attrs={"class":"form-control form-control-user","placeholder":"Email"})
         self.fields["email"].required = True
+        self.fields["first_name"].required = True
+        self.fields["last_name"].required = True
     
     def clean_email(self):
         email = self.cleaned_data.get("email")
@@ -37,3 +41,17 @@ class CreateUserForm(UserCreationForm):
             self.add_error("email","email daha önce kullanılmış")
         
         return email
+    
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data.get("password1"))
+        user.username = "{}_{}_{}".format(
+            self.cleaned_data.get("first_name").replace("ğ","g").replace("ü","u").replace("ş","s").replace("ı","i").replace("ö","o").replace("ç","c").lower(),
+            self.cleaned_data.get("last_name").replace("ğ","g").replace("ü","u").replace("ş","s").replace("ı","i").replace("ö","o").replace("ç","c").lower(),
+            random.randint(1,99)
+        )
+
+        if commit:
+            user.save()
+
+        return user
