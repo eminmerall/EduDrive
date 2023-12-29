@@ -1,8 +1,9 @@
 from django.shortcuts import redirect,render
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
-from Account.forms import CreateUserForm, LoginForm
-
+from Account.forms import CreateUserForm, LoginForm, ProfileForm, UserForm, UserPasswordChangeForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -63,7 +64,42 @@ def register_request(request):
     return render(request, 'Account/register.html',{'form':form})
 
 def change_password(request):
-    return render(request, 'account/change_password.html')
+    form= UserPasswordChangeForm(request.user)
+    if request.method=="POST":
+        form = UserPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request,"Parola Değiştirildi")
+            return redirect("change_password")
+        else:
+            return render(request, 'Account/change-password.html',{"form":form})
+            
+    return render(request, 'Account/change-password.html',{"form":form})
+
+@login_required(login_url='/Account/login')
+def profile(request):
+    if request.method =="POST":
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, istance=request.user.profile, files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request,"Profil bilgileriniz güncellendi.")
+            return redirect("profile")
+        else:
+            messages.error(request,"Lütfen bilgilerinizi kontrol ediniz")
+    else:        
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    
+    return render(request, 'Account/profile.html',{
+        'user_form':user_form,
+        'profile_form':profile_form
+    })
+
+def liked_files(request):
+    return render(request, 'Account/liked-files.html')
 
 def logout_request(request):
     logout(request)

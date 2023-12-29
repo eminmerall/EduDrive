@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.core import validators
 from django.core.validators import MaxLengthValidator,MinLengthValidator
@@ -56,31 +57,6 @@ class Lesson(models.Model):
     def __str__(self):
         return self.name
 
-class User(models.Model):
-    genders = (
-        ('M', 'Erkek'),
-        ('F', 'Kadin'),
-    )
-        
-    id = models.AutoField(primary_key=True)
-    username = models.CharField("Kullanıcı Adı", max_length=30)
-    first_name = models.CharField("Adı", max_length=100)
-    last_name = models.CharField("Soyadı", max_length=100)
-    image_name = models.CharField("Profil Resmi", max_length=200, null=True, blank=True)
-    date_of_birth = models.DateField("Doğum Tarihi", null=True, blank=True)
-    gender = models.CharField("Cinsiyet", max_length=1, choices=genders,null=True, blank=True)
-    scholl = models.ForeignKey(Scholl, on_delete=models.CASCADE, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True, blank=True)
-
-    class Meta:
-        verbose_name = "Kullanıcı"
-        verbose_name_plural = "Kullanıcılar"
-
-    def __str__(self):
-        return self.username
-        #return f"{self.first_name} {self.last_name}({self.username})"
-
 class Outhor(models.Model):
     genders = (
         ('M', 'Erkek'),
@@ -132,11 +108,11 @@ class File(models.Model):
     date = models.DateField("Yüklenme Tarihi", null=True, blank=True)
     slug = models.SlugField(unique=True,db_index=True)
     language = models.CharField("Dil", max_length=100)
-    outhor = models.ForeignKey(Outhor,on_delete=models.CASCADE)
-    scholl = models.ForeignKey(Scholl, on_delete=models.CASCADE, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    outhor = models.ForeignKey(Outhor,on_delete=models.SET_NULL, null=True,blank=True)
+    scholl = models.ForeignKey(Scholl, models.SET_NULL, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     is_active = models.BooleanField(default=0)
     is_home = models.BooleanField(default=0)
 
@@ -146,6 +122,13 @@ class File(models.Model):
 
     def __str__(self):
         return self.title
+
+class Slider(models.Model):
+        id = models.AutoField(primary_key=True)
+        title = models.CharField(max_length=200)
+        image = models.ImageField(upload_to="files")
+        file = models.ForeignKey(File, on_delete=models.SET_NULL, null=True, blank=True)
+        is_active = models.BooleanField(default=False)
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)

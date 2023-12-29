@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from Drive.models import Contact, Scholl, Department, Lesson, User, Outhor, File, Comment
+from Drive.models import Contact, Scholl, Department, Lesson, File, Outhor, Comment, Slider
 
 # Register your models here.
 
@@ -26,7 +26,7 @@ admin.site.register(Contact)
 admin.site.register(Scholl)
 admin.site.register(Department)
 admin.site.register(Lesson)
-admin.site.register(User)
+admin.site.register(Slider)
 admin.site.register(Outhor, OuthorAdmin)
 admin.site.register(File, FileAdmin)
 admin.site.register(Comment, CommentAdmin)

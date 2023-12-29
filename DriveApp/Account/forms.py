@@ -1,9 +1,17 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm,UserCreationForm
 from django.forms import widgets
 import random
 
+from Account.models import Profile
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["old_password"].widget = widgets.PasswordInput(attrs={"class":"form-control"})
+        self.fields["new_password1"].widget = widgets.PasswordInput(attrs={"class":"form-control"})
+        self.fields["new_password2"].widget = widgets.PasswordInput(attrs={"class":"form-control"})
 
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control form-control-user", "placeholder":"Enter Email"}))
@@ -55,3 +63,27 @@ class CreateUserForm(UserCreationForm):
             user.save()
 
         return user
+    
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields =("first_name","last_name","email",)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["first_name"].widget = widgets.TextInput(attrs={"class":"form-control","placeholder":"First Name"})
+        self.fields["last_name"].widget = widgets.TextInput(attrs={"class":"form-control","placeholder":"Last Name"})
+        self.fields["email"].widget = widgets.EmailInput(attrs={"class":"form-control","placeholder":"E-Mail"})
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields =("avatar","date_of_birth","gender","department","contact",)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["avatar"].widget = widgets.FileInput(attrs={"class":"form-control","placeholder":"Avatar"})
+        self.fields["date_of_birth"].widget = widgets.DateInput(attrs={"class":"form-control","placeholder":"Date of Birth"})
+        
+
+
