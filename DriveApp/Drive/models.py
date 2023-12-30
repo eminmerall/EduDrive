@@ -5,6 +5,7 @@ from django.core.validators import MaxLengthValidator,MinLengthValidator
 from django.db.models.fields import CharField
 from ckeditor.fields import RichTextField
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+import uuid
 
 
 class Contact(models.Model):
@@ -32,6 +33,8 @@ class Scholl(models.Model):
     
     def __str__(self):
         return self.name
+    
+
 
 class Department(models.Model):
     id = models.AutoField(primary_key=True)
@@ -99,15 +102,23 @@ class Outhor(models.Model):
         return f"{self.first_name} {self.last_name} ({self.title_tpyes[int(self.title_type)-1][1]})"
   
 class File(models.Model):
+    languages = (
+        ('1','Türkçe'),
+        ('2','İngilizce'),
+        ('3','Fransızca'),
+        ('4','Almanca'),
+        ('5','İtalyanca'),
+    )
+
     id = models.AutoField(primary_key=True)
-    title = models.CharField("Başlık", max_length=250)
-    description = RichTextField("Açıklama", null=True, blank=True)
-    file_name = models.ImageField("Dosya Adı", upload_to="Drive")
-    file_cover = models.ImageField("Dosya Resmi", upload_to="Drive")
+    title = models.CharField("Dosya Başlığı", max_length=250,null=True, blank=True)
+    description = models.TextField("Açıklama", null=True, blank=True)
+    file_name = models.FileField("Dosya", upload_to="Drive",null=True, blank=True)
+    file_cover = models.ImageField("Dosya Resmi", upload_to="Drive",null=True, blank=True)
     upload_date = models.DateTimeField(auto_now=True)
     date = models.DateField("Yüklenme Tarihi", null=True, blank=True)
     slug = models.SlugField(unique=True,db_index=True)
-    language = models.CharField("Dil", max_length=100)
+    language = models.CharField("Dil", max_length=100, choices=languages)
     outhor = models.ForeignKey(Outhor,on_delete=models.SET_NULL, null=True,blank=True)
     scholl = models.ForeignKey(Scholl, models.SET_NULL, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
@@ -122,6 +133,12 @@ class File(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = str(uuid.uuid4())[:8]
+
+        super().save(*args, **kwargs)
 
 class Slider(models.Model):
         id = models.AutoField(primary_key=True)

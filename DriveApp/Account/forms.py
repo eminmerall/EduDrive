@@ -5,6 +5,7 @@ from django.forms import widgets
 import random
 
 from Account.models import Profile
+from Drive.models import Department, Scholl
 
 class UserPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
@@ -72,18 +73,33 @@ class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["first_name"].widget = widgets.TextInput(attrs={"class":"form-control","placeholder":"First Name"})
-        self.fields["last_name"].widget = widgets.TextInput(attrs={"class":"form-control","placeholder":"Last Name"})
-        self.fields["email"].widget = widgets.EmailInput(attrs={"class":"form-control","placeholder":"E-Mail"})
+        self.fields["last_name"].widget = widgets.TextInput(attrs={"class":"form-control","placeholder":"Soyadı"})
+        self.fields["email"].widget = widgets.EmailInput(attrs={"class":"form-control","placeholder":"E-Posta"})
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields =("avatar","date_of_birth","gender","department","contact",)
+        fields =("avatar","date_of_birth","gender","scholl","department",)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["avatar"].widget = widgets.FileInput(attrs={"class":"form-control","placeholder":"Avatar"})
-        self.fields["date_of_birth"].widget = widgets.DateInput(attrs={"class":"form-control","placeholder":"Date of Birth"})
+        self.fields["date_of_birth"].widget = widgets.DateInput(attrs={"class":"form-control","placeholder":"Doğum Tarihi"})
+        self.fields["gender"] = forms.ChoiceField(label="Cinsiyet",choices=Profile.genders, widget=forms.Select(attrs={'class': 'form-control'}))
+
+        self.fields["scholl"] = forms.ModelChoiceField(
+            queryset=Scholl.objects.all(),
+            empty_label="Üniversite(Okul) Seçiniz",
+            label="Üniversite(Okul)",
+            widget=forms.Select(attrs={'class': 'form-control'})
+            )
+        
+        self.fields["department"] = forms.ModelChoiceField(
+            queryset=Department.objects.all(),
+            empty_label="Bölüm Seçiniz",
+            label="Bölüm",
+            widget=forms.Select(attrs={'class': 'form-control'})
+            )
         
 
 

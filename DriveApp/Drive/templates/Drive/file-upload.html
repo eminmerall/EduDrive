@@ -1,0 +1,66 @@
+{% extends "Drive/base.html" %} 
+{% load static %} 
+
+{% block css_files %} 
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/slick/slick.min.css"%} "/> 
+    <link rel="stylesheet" type="text/css" href="{% static "vendor/slick/slick-theme.min.css" %}" /> 
+{% endblock %} 
+{% block page_title %} Dosya Yükleme Sayfası {% endblock %} 
+
+{% block content %}
+    <div id="wrapper">
+        {% include "partials/_sidebar.html" %}
+      
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                
+                {% include "partials/_topbar.html" %}
+                <div class="container-fluid" >
+
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-3">
+                            {% include "partials/_add-menu.html" %}
+                        </div>
+                        <div class="col-xl-9 col-lg-9">
+                            <div class="bg-white p-3 widget shadow rounded mb-4">
+                                <div id="sidebar-1-1">
+                                    <div class=" d-sm-flex align-items-center justify-content-between mb-3">
+                                        <h1 class="h5 mb-0 text-gray-900">Dosya Yükle</h1>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col">
+                                            <form method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                {{ form.file_cover.errors }}
+                                                {% for field in form %}
+                                                    {% if field.name != 'file_cover' %}
+                                                        <div class="form-group">
+                                                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                                            {{ field }}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <button type="submit" class="btn btn-primary">Yükle</button>
+                                            </form>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>              
+            </div>
+
+            <script>
+                document.querySelectorAll("#sidebar-1 .nav-link")[0].classList.add("active")
+            </script>
+
+            {% include "partials/_footer.html" %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_files %}
+{% endblock %}

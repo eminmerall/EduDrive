@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "vendor/slick/slick.min.css"%} "/> 
     <link rel="stylesheet" type="text/css" href="{% static "vendor/slick/slick-theme.min.css" %}" /> 
 {% endblock %} 
-{% block page_title %} Register {% endblock %} 
+{% block page_title %} Kayıt Ol {% endblock %} 
 
 {% block content %}
 <div class="container">
@@ -57,10 +57,7 @@
 
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                                <a class="small" href="{% url "login" %}">Zaten Üye Misin? Giriş Yap!</a>
                             </div>
                         </div>
                     </div>

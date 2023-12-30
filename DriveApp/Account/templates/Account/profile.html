@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "vendor/slick/slick.min.css"%} "/> 
     <link rel="stylesheet" type="text/css" href="{% static "vendor/slick/slick-theme.min.css" %}" /> 
 {% endblock %} 
-{% block page_title %} Index {% endblock %} 
+{% block page_title %} Profil Sayfası {% endblock %} 
 
 {% block content %}
     <div id="wrapper">
@@ -35,7 +35,7 @@
                                             {% csrf_token %}
                                             {{ user_form.as_p }}
                                             {{ profile_form.as_p }}
-                                            {{ form.scholl}}
+
                                             <button class="btn btn-primary" type="submit">Kaydet</button>
                                             </form>
                                         </div>

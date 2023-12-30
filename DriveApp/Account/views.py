@@ -81,7 +81,7 @@ def change_password(request):
 def profile(request):
     if request.method =="POST":
         user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, istance=request.user.profile, files=request.FILES)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile, files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()

@@ -11,7 +11,7 @@ from Drive.models import Contact, Department, Scholl
 class Profile(models.Model):
     genders = (
          ('M', 'Erkek'),
-         ('F', 'Kadin'),
+         ('F', 'Kadın'),
      )
  
     user = models.OneToOneField(User, on_delete=models.CASCADE)
