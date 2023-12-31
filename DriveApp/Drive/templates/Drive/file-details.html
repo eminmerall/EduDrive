@@ -20,10 +20,10 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12">{% comment "" %}Üst Bölüm Başlangıç{% endcomment %}
                             <div class="cover-pic">
-                                <div class="position-absolute bg-white shadow-sm rounded text-center p-2 m-4 love-box">
+                                <!--<div class="position-absolute bg-white shadow-sm rounded text-center p-2 m-4 love-box">
                                     <h6 class="text-gray-900 mb-0 font-weight-bold"><i class="fas fa-heart text-danger"></i> 50%</h6>
                                     <small class="text-muted">8,784</small>
-                                </div>
+                                </div>-->
                                 <img src="{% static "img/Sakarya_University_banner.jpg" %}" class="img-fluid" alt="...">
                             </div>
                         </div>{% comment "" %}Üst Bölüm Bitiş{% endcomment %}
@@ -35,10 +35,10 @@
                                 <p>{{ file.outhor }}</p>
                                 <h1 class="h6 mb-0 mt-3 font-weight-bold text-gray-900">Yükleyen</h1>
                                 <p>{{ file.user }}</p>
-                                <h1 class="h6 mb-0 mt-3 font-weight-bold text-gray-900">Cast</h1>
-                                <p>Tom Holland,Jake Gyllenhaal,Zendaya</p>
-                                <h1 class="h6 mb-0 mt-3 font-weight-bold text-gray-900">Plot</h1>
-                                <p class="mb-0">Peter Parker and his friends go on a summer trip to Europe. However, they will hardly be able to rest - Peter.</p>
+                                <h1 class="h6 mb-0 mt-3 font-weight-bold text-gray-900">Üniverite</h1>
+                                <p>{{ file.scholl }}</p>
+                                <h1 class="h6 mb-0 mt-3 font-weight-bold text-gray-900">Bölüm</h1>
+                                <p class="mb-0">{{ file.department }}</p>
                             </div>
                         </div>{% comment "" %}Sol Bölüm Bitiş{% endcomment %}
 
@@ -48,34 +48,20 @@
                                     <div class="col-lg-7 m-b-4">
                                         <h3 class="text-gray-900 mb-0 mt-0 font-weight-bold">
                                             {{file.title}}
-                                            <small>
-                                                {{file.date}}
-                                            </small>
                                         </h3>
-                                        <p class="mb-0 text-gray-800"><small class="text-muted"><i class="fas fa-film fa-fw fa-sm mr-1"></i> Action / Adventure / Science Fiction / 3D</small></p>
+                                        <p class="mb-0 text-gray-800"><small class="text-muted"><i class="fas fa-regular fa-calendar fa-fw fa-sm mr-1"></i>{{file.date}}</small></p>
                                     </div>
                                     <div class="col-lg-5 text-right">
-                                        <a href="#" class="d-sm-inline-block btn btn-primary shadow-sm"><i class="fas fa-share-alt"></i></a>
-                                        <a href="#" class="d-sm-inline-block btn btn-danger shadow-sm"> Add to Watchlist <i class="fas fa-plus fa-sm  ml-1"></i></a>
+                                        {% if file.user == request.user %}
+                                            <a href="{% url 'edit_file' file_slug=file.slug  %}" class="d-sm-inline-block btn btn-success shadow-sm">Düzenle</a>
+                                        {% endif %}
+                                        <a href="{% url 'download_file' file_slug=file.slug %}" class="d-sm-inline-block btn btn-primary shadow-sm">İndir<i class="fas fa-solid fa-download ml-1"></i></a>
+                                        <a href="#" class="d-sm-inline-block btn btn-danger shadow-sm"><i class="fas fa-solid fa-flag"></i></a>                                      
                                     </div>
                                 </div>
                                 <div class="row d-flex align-items-center justify-content-between py-3 px-4">
                                     <div class="col-lg-6 m-b-4">
-                                        <p class="mb-0 text-gray-900"><i class="fas fa-money-bill fa-sm fa-fw mr-1"></i> BUDGET - <span class="text-white rounded px-2 py-1 bg-info">$160,000,000</span></p>
-                                    </div>
-                                    <div class="col-lg-6 text-right">
-                                        <a href="#" class="btn btn-sm btn-primary btn-circle">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger btn-circle">
-                                            <i class="fab fa-youtube"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-warning btn-circle">
-                                            <i class="fab fa-snapchat-ghost"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-info btn-circle">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
+                                        <p class="mb-0 text-gray-900"><i class="fas fa-solid fa-book fa-sm fa-fw mr-1"></i> Ders - <span class="text-white rounded px-2 py-1 bg-info">{{file.lesson}}</span></p>
                                     </div>
                                 </div>                           
                             </div>{% comment "" %}Sağ Bölüm Üst Bilgi Bitiş{% endcomment %}
@@ -83,202 +69,15 @@
                             <div class="bg-white p-3 widget shadow rounded mb-4">{% comment "" %}Sağ Bölüm Alt Bilgi Başlangıç{% endcomment %}
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Summary</a>
-                                    </li>
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Açıklama</a>
+                                    </li>                           
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Cast</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="false">Videos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Reviews</a>
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Yorumlar</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         {{file.description|safe}}
-                                    </div>
-                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-4">
-                                                <h5 class="h6 mt-0 mb-3 font-weight-bold text-gray-900">CAST</h5>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s1.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Carla Gugino</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s2.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Sylvester Stallone</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s3.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Rose Byrne</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s4.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Jason Statham</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4">
-                                                <h5 class="h6 mt-0 mb-3 font-weight-bold text-gray-900">CREW</h5>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s3.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Rose Byrne</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s4.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Jason Statham</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s1.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Carla Gugino</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s2.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Sylvester Stallone</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4">
-                                                <h5 class="h6 mt-0 mb-3 font-weight-bold text-gray-900">Support</h5>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s1.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Carla Gugino</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s2.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Sylvester Stallone</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s3.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Rose Byrne</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="artist-list mb-3">
-                                                    <a class="d-flex align-items-center" href="#">
-                                                        <div class="dropdown-list-image mr-3">
-                                                            <img class="rounded-circle" src="{% static "img/s4.png" %}" alt="">
-                                                            <div class="status-indicator bg-success"></div>
-                                                        </div>
-                                                        <div class="font-weight-bold">
-                                                            <div class="text-truncate">Jason Statham</div>
-                                                            <div class="small text-gray-500">Acting</div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="mb-4">
-                                                    <iframe width="100%" height="215" src="https://www.youtube.com/embed/uNppTCoYdWI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="mb-4">
-                                                    <iframe width="100%" height="215" src="https://www.youtube.com/embed/XkT6uwHFUKY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-                                                </div>
-                                            </div>
-                                                <div class="col-xl-6 col-lg-6">
-                                                    <div class="mb-4">
-                                                        <iframe width="100%" height="215" src="https://www.youtube.com/embed/uNppTCoYdWI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="mb-4">
-                                                    <iframe width="100%" height="215" src="https://www.youtube.com/embed/XkT6uwHFUKY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                         <div class="card-body p-0 reviews-card">
@@ -294,8 +93,6 @@
                         </div>
                     </div>
                 </div>
-
-                {% include "partials/_footer.html" %}
             </div>
         </div>    
     </div>

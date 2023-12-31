@@ -1,7 +1,8 @@
 from datetime import date
 from django.shortcuts import render, get_object_or_404, redirect
-from Drive.forms import CommentForm, FileUploadForm, SchollForm, DepartmentForm, LessonForm, OuthorForm
+from Drive.forms import CommentForm, FileUploadForm, FileEditForm, SchollForm, DepartmentForm, LessonForm, OuthorForm
 from django.http.response import HttpResponseRedirect
+from django.http import HttpResponse
 from Drive.models import File, Slider
 from django.urls import reverse
 from django.utils import timezone
@@ -59,6 +60,31 @@ def file_upload(request):
 
 
     return render(request, 'Drive/file-upload.html', {'form': form})
+
+def download_file(request, file_slug):
+    file_obj = get_object_or_404(File, slug=file_slug)
+    file_data = file_obj.file_name.read()
+    response = HttpResponse(file_data, content_type='application/octet-stream')
+    response['Content-Disposition'] = f'attachment; filename="{file_obj.file_name.name}"'
+
+    return response
+
+def user_files(request):
+    user_files = File.objects.filter(user=request.user)
+    return render(request, 'Drive/user-files.html',{'user_files':user_files})
+
+def edit_file(request, file_slug):
+    file_instance = get_object_or_404(File, slug=file_slug)
+    
+    if request.method == 'POST':
+        form = FileEditForm(request.POST, instance=file_instance)
+        if form.is_valid():
+            form.save()
+            # Başarılı bir şekilde kaydedildiğinde yapılacak işlemler
+    else:
+        form = FileEditForm(instance=file_instance)
+    
+    return render(request, 'Drive/edit-file.html', {'form': form})
 
 def add_school(request):
     if request.method == 'POST':

@@ -1,5 +1,5 @@
 {% load static %} 
-<h5 class="card-title mb-4">Leave a Review</h5>
+<h5 class="card-title mb-4">Bir Yorum Bırak</h5>
 <form action="{% url 'file_details' file.slug  %}" method="POST" novalidate>
     {% csrf_token %}
     <div class="row">

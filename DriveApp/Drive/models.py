@@ -25,6 +25,8 @@ class Contact(models.Model):
 class Scholl(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField("Okul(Üniversite) Adı", max_length=100)
+    description = models.TextField("Açıklama",max_length=5000, null=True, blank=True)
+    banner = models.ImageField("Bölüm Logosu", upload_to="Drive",null=True, blank=True)
     contact = models.OneToOneField(Contact, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
@@ -34,11 +36,11 @@ class Scholl(models.Model):
     def __str__(self):
         return self.name
     
-
-
 class Department(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField("Bölüm(Departman) Adı", max_length=100)
+    description = models.TextField("Açıklama",max_length=5000, null=True, blank=True)
+    banner = models.ImageField("Bölüm Logosu", upload_to="Drive",null=True, blank=True)
     scholl = models.ManyToManyField(Scholl)
 
     class Meta:
@@ -51,6 +53,7 @@ class Department(models.Model):
 class Lesson(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField("Ders Adı", max_length=100)
+    description = models.TextField("Açıklama",max_length=5000, null=True, blank=True)
     department = models.ManyToManyField(Department)
 
     class Meta:
@@ -103,11 +106,11 @@ class Outhor(models.Model):
   
 class File(models.Model):
     languages = (
-        ('1','Türkçe'),
-        ('2','İngilizce'),
-        ('3','Fransızca'),
-        ('4','Almanca'),
-        ('5','İtalyanca'),
+        ('Türkçe','Türkçe'),
+        ('İngilizce','İngilizce'),
+        ('Fransızca','Fransızca'),
+        ('Almanca','Almanca'),
+        ('İtalyanca','İtalyanca'),
     )
 
     id = models.AutoField(primary_key=True)
