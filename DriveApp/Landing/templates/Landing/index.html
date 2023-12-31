@@ -1,0 +1,50 @@
+{% extends "Landing/base.html" %} 
+{% load static %} 
+
+{% block page_title %} Index {% endblock %} 
+
+{% block content %}
+
+    <!-- Navbar Start -->
+        {% include "partials/_header.html" %}
+    <!-- Navbar End -->
+
+
+    <!-- Carousel Start -->
+    {% include "partials/_carousel.html" %}
+    <!-- Carousel End -->
+
+    <!-- Service Start -->
+    {% include "partials/_service.html" %}
+    <!-- Service End -->
+
+
+    <!-- About Start -->
+    {% include "partials/_about.html" %}
+    <!-- About End -->
+
+
+    <!-- Categories Start -->
+    {% include "partials/_categories.html" %}
+    <!-- Categories Start -->
+
+
+    <!-- Courses Start -->
+    {% include "partials/_courses.html" %}
+    <!-- Courses End -->
+
+
+    <!-- Team Start -->
+    {% include "partials/_team.html" %}
+    <!-- Team End -->
+
+
+    <!-- Testimonial Start -->
+    {% include "partials/_testimonial.html" %}
+    <!-- Testimonial End -->
+        
+
+    <!-- Footer Start -->
+    {% include "partials/_Landing.Footer.html" %}
+    <!-- Footer End -->
+    {% endblock %} 

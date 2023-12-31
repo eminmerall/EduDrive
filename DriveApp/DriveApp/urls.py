@@ -19,7 +19,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('',include("Drive.urls")),
+    path('',include("Landing.urls")),
+    path('Drive/',include("Drive.urls")),
     path('Account/',include("Account.urls")),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
