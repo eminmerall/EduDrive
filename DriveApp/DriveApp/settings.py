@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'Drive',
     'Account',
     'Landing',
+    'OCRApp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

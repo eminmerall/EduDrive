@@ -1,0 +1,41 @@
+{% extends "Drive/base.html" %} 
+{% load static %} 
+{% block head_scripts %}<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>{% endblock %}
+{% block page_title %} OCR  Sayfası {% endblock %} 
+
+{% block content %}
+
+    <div id="wrapper">
+        {% include "partials/_sidebar.html" %}
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+            {% include "partials/_topbar.html" %}
+            <div class="container-fluid" >
+                <div class="row">
+                    <div class="col-xl-9 col-lg-9">
+                        <div class="bg-white p-3 widget shadow rounded mb-4">
+                            <div id="sidebar-1-1">
+                                <div class=" d-sm-flex align-items-center justify-content-between mb-3">
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="file_name" value="{{ file_name }}">
+                                            <textarea name="edited_text">{{ text }}</textarea>
+                                            <button type="submit">Save</button>
+                                        </form>
+                                        <script>
+                                            CKEDITOR.replace('edited_text');
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

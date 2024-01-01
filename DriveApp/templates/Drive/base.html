@@ -8,6 +8,7 @@
     <link href="{% static "Drive/vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet" type="text/css">
     <link href="{% static "Drive/css/style.css" %}" rel="stylesheet">
     <link href="{% static "Drive/css/site.css" %}" rel="stylesheet">
+    {% block head_scripts %}{% endblock %}
     {% block css_files %}{% endblock %}
     <title>{% block page_title %}{% endblock  %}</title>
 </head>
