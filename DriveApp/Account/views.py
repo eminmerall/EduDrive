@@ -1,6 +1,7 @@
 from django.shortcuts import redirect,render
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
+from .models import Profile
 from Account.forms import CreateUserForm, LoginForm, ProfileForm, UserForm, UserPasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required

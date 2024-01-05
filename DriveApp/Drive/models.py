@@ -85,7 +85,7 @@ class Outhor(models.Model):
     first_name = models.CharField("Adı", max_length=100)
     last_name = models.CharField("Soyadı", max_length=100)
     biography = models.TextField("Özgeçmiş", max_length=3000, null=True, blank=True)
-    image_name = models.CharField("Profil Resmi", max_length=200, null=True, blank=True)
+    image_name = models.ImageField("Profil Resmi", upload_to="Drive",null=True, blank=True)
     date_of_birth = models.DateField("Doğum Tarihi", null=True, blank=True)
     gender = models.CharField("Cinsiyet", max_length=1, choices=genders)
     title_type = models.CharField("Ünvan", max_length=1, choices=title_tpyes)

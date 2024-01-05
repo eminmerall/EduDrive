@@ -21,9 +21,9 @@
                                     <div class="col">
                                         <form method="post">
                                             {% csrf_token %}
-                                            <input type="hidden" name="file_name" value="{{ file_name }}">
-                                            <textarea name="edited_text">{{ text }}</textarea>
-                                            <button type="submit">Save</button>
+                                            <input type="hidden" name="file_name" class='form-control' value="{{ file_name }}">
+                                            <textarea name="edited_text" class='form-control' rows="3" >{{ text }}</textarea>
+                                            <button type="submit" class='form-control'rows="3">Save</button>
                                         </form>
                                         <script>
                                             CKEDITOR.replace('edited_text');

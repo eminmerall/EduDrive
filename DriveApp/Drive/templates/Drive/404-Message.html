@@ -1,0 +1,40 @@
+{% extends "Drive/base.html" %} 
+{% load static %} 
+
+{% block css_files %} 
+    <link rel="stylesheet" type="text/css" href="{% static "Drive/vendor/slick/slick.min.css"%} "/> 
+    <link rel="stylesheet" type="text/css" href="{% static "Drive/vendor/slick/slick-theme.min.css" %}" /> 
+{% endblock %} 
+{% block page_title %} Index {% endblock %} 
+
+{% block content %}
+    <div id="wrapper">
+        {% include "partials/_sidebar.html" %}
+      
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                
+                {% include "partials/_topbar.html" %}
+                
+                <div class="container-fluid">
+
+                    <div class="container-fluid">
+                        <div class="text-center">
+                           <div class="error mx-auto" data-text="404">404</div>
+                           <p class="lead text-gray-800 mb-5">Sayfa Bulunamadı</p>
+                           <p class="text-gray-500 mb-0">Görünüşe göre Matrixde bir hata buldun ;)</p>
+                           <a href="{% url "home_page" %}">← Anasayfaya Dön</a>
+                        </div>
+                     </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_files %}
+{% endblock %}

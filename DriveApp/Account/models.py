@@ -15,7 +15,7 @@ class Profile(models.Model):
      )
  
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.FileField(upload_to="Account", blank=True)
+    avatar = models.ImageField(upload_to="Account", blank=True, null=True)
     date_of_birth = models.DateField("Doğum Tarihi", null=True, blank=True)
     gender = models.CharField("Cinsiyet", max_length=1, choices=genders,null=True, blank=True)
     scholl = models.ForeignKey(Scholl, on_delete=models.CASCADE, null=True, blank=True)

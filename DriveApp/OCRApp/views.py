@@ -8,7 +8,9 @@ import pdfplumber
 from docx import Document
 from .forms import OCRDocumentForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/Account/login')
 def process_pdf(file_name):
     text = ''
     with pdfplumber.open(file_name) as pdf:
@@ -16,6 +18,7 @@ def process_pdf(file_name):
             text += page.extract_text()
     return text
 
+@login_required(login_url='/Account/login')
 def process_docx(file_name):
     doc = Document(file_name)
     text = ''
@@ -23,11 +26,13 @@ def process_docx(file_name):
         text += para.text
     return text
 
+@login_required(login_url='/Account/login')
 def process_image(file_name):
     image = Image.open(file_name)
     text = pytesseract.image_to_string(image)
     return text
 
+@login_required(login_url='/Account/login')
 def ocr_document(request):
     if request.method == 'POST' and request.FILES.get('file'):
         uploaded_file = request.FILES['file']
@@ -50,6 +55,7 @@ def ocr_document(request):
 
     return render(request, 'ocr-upload.html')
 
+@login_required(login_url='/Account/login')
 def ocr_result(request, pk):
     ocr_document = get_object_or_404(OCRDocument, pk=pk)
 

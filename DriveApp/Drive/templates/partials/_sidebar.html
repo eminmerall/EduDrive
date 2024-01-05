@@ -2,12 +2,7 @@
 
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url "home_page" %}">
-        <div class="sidebar-brand-icon">
-            <img src="{% static "img/logo-icon.png" %}" alt="" />
-        </div>
-        <div class="sidebar-brand-text mx-3">
-            <img src="{% static "img/logo.png" %}" alt="" />
-        </div>
+        <img src="{% static "Drive/img/BannerLogo.png" %}" alt="" />
     </a>
 
     <li class="nav-item active">
@@ -19,48 +14,52 @@
     <li class="nav-item">
         <a class="nav-link" href="people.html">
             <i class="fas fa-fw fa-users"></i>
-            <span>Kullanıcılar</span>
+            <span>Dokümanlar</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="sports.html">
+        <a class="nav-link" href="{% url "file_upload" %}">
             <i class="fas fa-fw fa-futbol"></i>
-            <span>Üniversiteler</span>
+            <span>Dosya Yükle</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url "user_files" %}">
+        <a class="nav-link" href="{% url "ocr_document" %}">
             <i class="fas fa-fw fa-futbol"></i>
-            <span>Dosyalarım</span>
+            <span>Doküman Tarat</span>
         </a>
     </li>
     <hr class="sidebar-divider" />
 
     <div class="sidebar-heading">Extra</div>
-
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-pager"></i>
-            <span>Pages</span>
+        <a class="nav-link" href="{% url "scholl_list" %}">
+            <i class="fas fa-fw fa-fire"></i>
+            <span>Üniveriteler</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" >
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">All Pages</h6>
-                <a class="collapse-item" href="movies.html">Movies</a>
-                <a class="collapse-item" href="movies-detail.html">Movie Detail</a>
-                <a class="collapse-item" href="events.html">Events</a>
-                <a class="collapse-item" href="events-detail.html">Event Detail</a>
-                <a class="collapse-item" href="people.html">People</a>
-                <a class="collapse-item" href="people-detail.html">People Detail</a>
-                <a class="collapse-item" href="sports.html">Sports</a>
-                <a class="collapse-item" href="sports-detail.html">Sport Detail</a>
-            </div>
-        </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="offers.html">
+        <a class="nav-link" href="{% url "department_list" %}">
             <i class="fas fa-fw fa-fire"></i>
-            <span>Offers</span>
+            <span>Bölümler</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "lesson_list" %}">
+            <i class="fas fa-fw fa-fire"></i>
+            <span>Dersler</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "outhor_list" %}">
+            <i class="fas fa-fw fa-fire"></i>
+            <span>Yazarlar</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "profile_list" %}">
+            <i class="fas fa-fw fa-fire"></i>
+            <span>Kullanıcılar</span>
         </a>
     </li>
 </ul>

@@ -22,13 +22,13 @@
                                     <div class="col">
                                         <form method="post">
                                             {% csrf_token %}
-                                            <label for="title">Title:</label>
-                                            <input type="text" name="title" id="title" value="{{ ocr_document.title }}"><br><br>
-                                            <label for="description">Description:</label>
-                                            <textarea name="description" id="description">{{ ocr_document.description }}</textarea><br><br>
-                                            <label for="ocr_text">OCR Text:</label>
-                                            <textarea name="ocr_text" id="ocr_text">{{ ocr_document.ocr_text }}</textarea><br><br>
-                                            <input type="submit" value="Save Changes">
+                                            <label for="title">Başlık</label>
+                                            <input type="text" class='form-control' name="title" id="title" value="{{ ocr_document.title }}"><br><br>
+                                            <label for="description">Açıklama</label>
+                                            <textarea name="description" id="description" class='form-control'>{{ ocr_document.description }}</textarea><br><br>
+                                            <label for="ocr_text">OCR Sonuç:</label>
+                                            <textarea name="ocr_text" id="ocr_text" class='form-control'>{{ ocr_document.ocr_text }}</textarea><br><br>
+                                            <input type="submit" class="btn btn-success" value="Save Changes">
                                         </form>
                                     </body>
                                     </div>

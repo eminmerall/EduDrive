@@ -15,8 +15,8 @@ class UserPasswordChangeForm(PasswordChangeForm):
         self.fields["new_password2"].widget = widgets.PasswordInput(attrs={"class":"form-control"})
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control form-control-user", "placeholder":"Enter Email"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control form-control-user", "placeholder":"Enter Password"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class":"form-control form-control-user", "placeholder":"E-Posta Adresi"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"form-control form-control-user", "placeholder":"Şifre"}))
     remember_me = forms.BooleanField(required=False, initial=False, widget=forms.CheckboxInput(attrs={"class":"custom-control-input"}))
 
     def clean_email(self):
@@ -34,11 +34,11 @@ class CreateUserForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["password1"].widget = widgets.PasswordInput(attrs={"class":"form-control form-control-user","placeholder":"Password"})
-        self.fields["password2"].widget = widgets.PasswordInput(attrs={"class":"form-control form-control-user","placeholder":"Password Again"})
-        self.fields["first_name"].widget = widgets.TextInput(attrs={"class":"form-control form-control-user","placeholder":"Name"})
-        self.fields["last_name"].widget = widgets.TextInput(attrs={"class":"form-control form-control-user","placeholder":"LastName"})
-        self.fields["email"].widget = widgets.EmailInput(attrs={"class":"form-control form-control-user","placeholder":"Email"})
+        self.fields["password1"].widget = widgets.PasswordInput(attrs={"class":"form-control form-control-user","placeholder":"Şifre"})
+        self.fields["password2"].widget = widgets.PasswordInput(attrs={"class":"form-control form-control-user","placeholder":"Şifre(tekrar)"})
+        self.fields["first_name"].widget = widgets.TextInput(attrs={"class":"form-control form-control-user","placeholder":"Adı"})
+        self.fields["last_name"].widget = widgets.TextInput(attrs={"class":"form-control form-control-user","placeholder":"Soyadı"})
+        self.fields["email"].widget = widgets.EmailInput(attrs={"class":"form-control form-control-user","placeholder":"E-Posta Adresi"})
         self.fields["email"].required = True
         self.fields["first_name"].required = True
         self.fields["last_name"].required = True
