@@ -30,7 +30,7 @@
                                             <a href="{% url "404" %}">
                                             <div class="row no-gutters">
                                                 <div class="col-md-4">
-                                                    <img src="" class="card-img" alt="...">
+                                                    <img src="{{ profile.avatar}} " class="card-img" alt="..." >
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -48,6 +48,7 @@
                        </div>
                     </div>
                  </div>
+                 
 
             {% include "partials/_footer.html" %}
         </div>
